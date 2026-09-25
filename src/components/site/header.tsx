@@ -4,17 +4,17 @@ import { Logo } from "@/components/site/logo";
 import { MobileMenu } from "@/components/site/mobile-menu";
 
 const navLinkClass =
-  "rounded-md border border-transparent px-3 py-1.5 transition-all duration-200 hover:scale-110 hover:border-green-500 hover:text-green-600 hover:shadow-sm dark:hover:border-green-400 dark:hover:text-green-400";
+  "rounded-md text-base font-medium text-body transition-colors duration-150 hover:text-brand";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-20 border-b border-gray-200 bg-white/80 backdrop-blur dark:border-gray-900 dark:bg-black">
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-        <Link href="/" className="min-w-0">
-          <Logo size={44} textClassName="text-xl sm:text-3xl" />
+    <header className="animate-fade-in sticky top-0 z-40 flex h-[75px] items-center border-b border-line bg-page/90 px-5 backdrop-blur sm:h-[100px] sm:px-6 lg:px-[clamp(28px,12vw,290px)]">
+      <div className="flex w-full items-center gap-10">
+        <Link href="/" className="shrink-0" aria-label="Taskflow home">
+          <Logo iconSize={25} textClassName="text-[22px] sm:text-[27px]" />
         </Link>
 
-        <nav className="hidden items-center gap-2 text-base font-medium text-gray-600 dark:text-gray-300 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-9 md:ml-auto md:flex">
           <Link href="/how-it-works" className={navLinkClass}>
             How it works
           </Link>
@@ -26,17 +26,14 @@ export function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="ml-auto flex items-center gap-3 sm:gap-[22px] md:ml-0">
           <ThemeToggle />
-          <Link
-            href="/login"
-            className={`hidden text-base font-semibold text-gray-700 dark:text-gray-300 sm:block ${navLinkClass}`}
-          >
+          <Link href="/login" className={`hidden sm:block ${navLinkClass}`}>
             Sign in
           </Link>
           <Link
             href="/register"
-            className="rounded-md border border-transparent bg-gray-900 px-3 py-2 text-sm font-semibold text-white transition-all duration-200 hover:scale-110 hover:border-green-400 hover:shadow-sm dark:bg-white dark:text-gray-900 sm:px-5 sm:py-2.5 sm:text-base"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-[7px] bg-navy px-4 text-[15px] font-bold text-white transition-all duration-200 hover:-translate-y-px hover:shadow-md hover:shadow-navy/20 dark:bg-white dark:text-navy sm:h-[52px] sm:min-w-[120px] sm:px-[27px] sm:text-[17px]"
           >
             Sign up
           </Link>

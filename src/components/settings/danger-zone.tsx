@@ -28,7 +28,7 @@ export function DangerZone({ email }: { email: string }) {
   }
 
   return (
-    <div className="rounded-xl border border-red-300 dark:border-red-900">
+    <div className="overflow-hidden rounded-2xl border border-red-300 bg-card dark:border-red-900">
       <div className="border-b border-red-300 bg-red-50 px-5 py-3 dark:border-red-900 dark:bg-red-950/40">
         <h2 className="text-sm font-bold uppercase tracking-wide text-red-700 dark:text-red-400">
           Danger Zone
@@ -37,10 +37,10 @@ export function DangerZone({ email }: { email: string }) {
 
       <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-4">
         <div>
-          <p className="font-medium text-gray-900 dark:text-gray-100">
+          <p className="font-medium text-ink">
             Delete this account
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-muted">
             Permanently deletes your account and all your tasks. This action
             cannot be undone.
           </p>
@@ -56,15 +56,16 @@ export function DangerZone({ email }: { email: string }) {
 
       {open && (
         <div className="animate-fade-in-up space-y-3 border-t border-red-200 px-5 py-4 dark:border-red-900">
-          <p className="text-sm text-gray-700 dark:text-gray-300">
+          <p className="text-sm text-body">
             This action is irreversible. To confirm, type your email (
             <span className="font-semibold">{email}</span>) in the box below.
           </p>
           <input
+            aria-label="Type your email to confirm"
             value={confirmation}
             onChange={(e) => setConfirmation(e.target.value)}
             placeholder={email}
-            className="w-full max-w-sm rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            className="w-full max-w-sm h-10 rounded-lg border border-line bg-card px-3 text-sm text-ink outline-none focus:border-red-500 focus:ring-4 focus:ring-red-500/10"
           />
           {error && (
             <p className="animate-shake text-sm text-red-600 dark:text-red-400">
@@ -87,7 +88,7 @@ export function DangerZone({ email }: { email: string }) {
                 setConfirmation("");
                 setError(null);
               }}
-              className="rounded-md px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="rounded-md px-4 py-2 text-sm font-semibold text-body hover:bg-subtle"
             >
               Cancel
             </button>

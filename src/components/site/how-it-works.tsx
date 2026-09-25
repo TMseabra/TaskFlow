@@ -83,10 +83,10 @@ export function HowItWorks() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
-        <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-5xl font-bold text-ink">
           How it works
         </h1>
-        <p className="mt-5 text-xl text-gray-600 dark:text-gray-400">
+        <p className="mt-5 text-xl text-body">
           From account to first organized task, step by step.
         </p>
       </div>
@@ -95,16 +95,16 @@ export function HowItWorks() {
         {steps.map((step) => (
           <div
             key={step.title}
-            className="group flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-900/5 sm:flex-row sm:items-start sm:gap-8 dark:border-emerald-900/60 dark:bg-neutral-950 dark:hover:border-emerald-500 dark:hover:shadow-black/40"
+            className="group flex flex-col gap-5 rounded-2xl border border-line bg-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-xl hover:shadow-navy/5 sm:flex-row sm:items-start sm:gap-8 dark:border-emerald-900/60 dark:hover:border-emerald-500 dark:hover:shadow-black/40"
           >
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gray-900 text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 dark:bg-white dark:text-gray-900 [&_svg]:h-8 [&_svg]:w-8">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-navy text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 dark:bg-white dark:text-navy [&_svg]:h-8 [&_svg]:w-8">
               {step.icon}
             </div>
             <div>
-              <h2 className="text-2xl font-semibold text-gray-900 transition-colors group-hover:text-emerald-600 dark:text-gray-100 dark:group-hover:text-emerald-400">
+              <h2 className="text-2xl font-semibold text-ink transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                 {step.title}
               </h2>
-              <p className="mt-3 text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+              <p className="mt-3 text-lg leading-relaxed text-body">
                 {step.description}
               </p>
             </div>
@@ -113,22 +113,22 @@ export function HowItWorks() {
       </div>
 
       <div className="mt-28">
-        <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-gray-100">
+        <h2 className="text-center text-4xl font-bold text-ink">
           Everything at your disposal
         </h2>
         <div className="mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-2xl border border-gray-200 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-gray-900/5 dark:border-emerald-900/60 dark:bg-neutral-950 dark:hover:border-emerald-500 dark:hover:shadow-black/40"
+              className="group rounded-2xl border border-line p-7 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-navy/5 dark:border-emerald-900/60 dark:hover:border-emerald-500 dark:hover:shadow-black/40"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-900 transition-all duration-300 group-hover:scale-110 group-hover:bg-emerald-100 group-hover:text-emerald-700 dark:bg-gray-800 dark:text-gray-100 dark:group-hover:bg-emerald-950 dark:group-hover:text-emerald-400 [&_svg]:h-6 [&_svg]:w-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-subtle text-ink transition-all duration-300 group-hover:scale-110 group-hover:bg-emerald-100 group-hover:text-emerald-700 dark:group-hover:bg-emerald-950 dark:group-hover:text-emerald-400 [&_svg]:h-6 [&_svg]:w-6">
                 {feature.icon}
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="mt-4 text-lg font-semibold text-ink">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-base text-body">
                 {feature.description}
               </p>
             </div>

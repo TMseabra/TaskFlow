@@ -1,33 +1,34 @@
 export function Logo({
-  size = 56,
-  textClassName = "text-3xl",
+  iconSize = 26,
+  textClassName = "text-[22px]",
 }: {
-  size?: number;
+  iconSize?: number;
   textClassName?: string;
 }) {
-  const iconSize = Math.round(size * 0.45);
   return (
-    <span className="flex items-center gap-2 sm:gap-3">
+    <span className="flex items-center gap-2.5">
       <span
-        style={{ width: iconSize, height: iconSize, borderWidth: 3 }}
-        className="flex shrink-0 items-center justify-center rounded-md border-solid border-[#00c96b] text-[#00c96b]"
+        style={{ width: iconSize, height: iconSize, borderWidth: Math.max(2, Math.round(iconSize / 9)) }}
+        className="flex shrink-0 items-center justify-center rounded-[7px] border-solid border-brand text-brand"
+        aria-hidden="true"
       >
         <svg
-          width={Math.round(iconSize * 0.6)}
-          height={Math.round(iconSize * 0.6)}
+          width={Math.round(iconSize * 0.62)}
+          height={Math.round(iconSize * 0.62)}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="3"
+          strokeWidth="3.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <polyline points="4 12 9 17 20 6" />
+          <polyline points="4.5 12.5 9.5 17.5 19.5 6.5" />
         </svg>
       </span>
-      <span className={`font-extrabold tracking-tight lowercase ${textClassName}`}>
-        <span className="text-[#07585c] dark:text-[#3ddc9a]">task</span>
-        <span className="text-[#00c96b]">flow</span>
+      <span
+        className={`whitespace-nowrap font-extrabold lowercase leading-none tracking-[-0.02em] text-brand-ink ${textClassName}`}
+      >
+        task<span className="text-brand">flow</span>
       </span>
     </span>
   );

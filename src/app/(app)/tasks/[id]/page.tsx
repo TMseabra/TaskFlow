@@ -1,35 +1,6 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { TaskForm } from "@/components/tasks/task-form";
+import { redirect } from "next/navigation";
 
-export default async function TaskDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const session = await auth();
-  const userId = session!.user.id;
+export default async function TaskDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-
-  const task = await prisma.task.findUnique({ where: { id } });
-
-  if (!task || task.userId !== userId) {
-    notFound();
-  }
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <Link href="/tasks" className="text-sm text-gray-500 hover:underline dark:text-gray-400">
-          &larr; Back to tasks
-        </Link>
-        <h1 className="mt-2 text-2xl font-bold text-gray-900 dark:text-gray-100">Edit task</h1>
-      </div>
-      <div className="max-w-xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-        <TaskForm task={task} />
-      </div>
-    </div>
-  );
+  redirect(`/tasks?open=${encodeURIComponent(id)}`);
 }

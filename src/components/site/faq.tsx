@@ -29,24 +29,24 @@ const faqs = [
 export function Faq() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
-      <h1 className="text-center text-4xl font-bold text-gray-900 dark:text-gray-100">
+      <h1 className="text-center text-4xl font-bold text-ink">
         Frequently asked questions
       </h1>
-      <p className="mt-4 text-center text-lg text-gray-600 dark:text-gray-400">
+      <p className="mt-4 text-center text-lg text-body">
         Hover over a question to see the answer.
       </p>
-      <div className="mt-12 divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-900">
+      <div className="mt-12 divide-y divide-line rounded-xl border border-line bg-card">
         {faqs.map((faq) => (
           <div key={faq.question} className="group">
-            <div className="flex w-full cursor-default select-none items-center justify-between gap-4 px-6 py-5 text-left text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <div className="flex w-full cursor-default select-none items-center justify-between gap-4 px-6 py-5 text-left text-lg font-semibold text-ink">
               {faq.question}
-              <span className="shrink-0 text-2xl text-gray-400 transition-transform duration-300 group-hover:rotate-45">
+              <span className="shrink-0 text-2xl text-muted transition-transform duration-300 group-hover:rotate-45">
                 +
               </span>
             </div>
             <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
               <div className="overflow-hidden">
-                <p className="px-6 pb-5 text-base text-gray-600 dark:text-gray-400">
+                <p className="px-6 pb-5 text-base text-body">
                   {faq.answer}
                 </p>
               </div>

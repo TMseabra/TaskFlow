@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
-import { HeroMockup } from "@/components/site/hero-mockup";
+import { DashboardPreview } from "@/components/dashboard/dashboard-preview";
 
 export default async function HomePage() {
   const session = await auth();
@@ -15,28 +15,33 @@ export default async function HomePage() {
     <>
       <SiteHeader />
       <main className="flex-1">
-        <section className="relative flex min-h-[650px] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:px-6 lg:h-[calc(100vh-180px)]">
-          <HeroMockup />
+        <section className="relative flex h-[calc(100svh-150px)] min-h-[600px] flex-col items-center justify-center overflow-hidden px-4 text-center sm:h-[calc(100svh-200px)] sm:min-h-[650px] sm:px-6">
+          <DashboardPreview />
 
-          <div className="relative z-10">
-            <h1 className="animate-fade-in-up lowercase text-6xl font-extrabold leading-none tracking-[-2px] sm:text-8xl sm:tracking-[-3px] md:text-[100px] md:tracking-[-4px]">
-              <span className="text-[#07585c] dark:text-[#3ddc9a]">task</span>
-              <span className="text-[#00c96b]">flow</span>
+          <div className="relative z-10 mt-[30px]">
+            <h1 className="animate-fade-in-up text-[58px] font-extrabold lowercase leading-none tracking-[-4px] text-brand-ink sm:text-[clamp(70px,6vw,105px)] sm:tracking-[-5px]">
+              task<span className="text-brand">flow</span>
             </h1>
-            <p className="animate-fade-in-up mx-auto mt-8 max-w-2xl text-lg leading-snug text-[#5b687a] dark:text-gray-400 sm:text-xl">
-              Organize your tasks: statuses, priorities, deadlines, and a
-              dashboard with real-time statistics.
+            <p
+              className="animate-fade-in-up mx-auto mt-[34px] max-w-[750px] px-2 text-[17px] leading-[1.4] text-body sm:px-0 sm:text-[21px]"
+              style={{ animationDelay: "80ms" }}
+            >
+              Organize your tasks: statuses, priorities, deadlines, and a dashboard with
+              <br className="hidden sm:inline" /> real-time statistics.
             </p>
-            <div className="mt-10 flex w-full max-w-xs flex-col gap-3 sm:mx-auto sm:w-auto sm:max-w-none sm:flex-row sm:justify-center sm:gap-4">
+            <div
+              className="animate-fade-in-up mt-10 flex flex-col items-center justify-center gap-[15px] sm:flex-row"
+              style={{ animationDelay: "160ms" }}
+            >
               <Link
                 href="/register"
-                className="rounded-md border border-transparent bg-[#101827] px-7 py-3.5 text-lg font-bold text-white transition-all duration-200 hover:scale-110 hover:border-green-400 hover:shadow-md dark:bg-white dark:text-gray-900"
+                className="inline-flex h-[50px] min-w-[140px] items-center justify-center rounded-[7px] border border-navy bg-navy px-[27px] text-[17px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/20 dark:border-white dark:bg-white dark:text-navy sm:h-[58px] sm:min-w-[120px]"
               >
                 Sign up
               </Link>
               <Link
                 href="/login"
-                className="rounded-md border border-[#dce1e6] bg-white px-7 py-3.5 text-lg font-bold text-[#101827] transition-all duration-200 hover:scale-110 hover:border-green-500 hover:text-green-600 hover:shadow-md dark:border-gray-700 dark:bg-transparent dark:text-gray-100 dark:hover:border-green-400 dark:hover:text-green-400"
+                className="inline-flex h-[50px] min-w-[140px] items-center justify-center rounded-[7px] border border-[#dce1e6] bg-card px-[27px] text-[17px] font-bold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:border-brand hover:text-brand dark:border-line sm:h-[58px] sm:min-w-[120px]"
               >
                 Sign in
               </Link>

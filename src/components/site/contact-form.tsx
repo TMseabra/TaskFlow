@@ -48,7 +48,7 @@ export function ContactForm() {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white"
+        className="w-full rounded-md border border-line bg-card px-3 py-2 text-sm text-ink focus:border-brand focus:outline-none"
       />
       <input
         required
@@ -56,7 +56,7 @@ export function ContactForm() {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white"
+        className="w-full rounded-md border border-line bg-card px-3 py-2 text-sm text-ink focus:border-brand focus:outline-none"
       />
       <textarea
         required
@@ -64,7 +64,7 @@ export function ContactForm() {
         placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white"
+        className="w-full rounded-md border border-line bg-card px-3 py-2 text-sm text-ink focus:border-brand focus:outline-none"
       />
       {status === "error" && (
         <p className="animate-shake text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -72,7 +72,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full rounded-md bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+        className="w-full rounded-md bg-navy px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#1c2638] disabled:opacity-50 dark:bg-white dark:text-navy dark:hover:bg-gray-200"
       >
         {status === "loading" ? "Sending..." : "Send message"}
       </button>

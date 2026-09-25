@@ -1,85 +1,108 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useWorkspace } from "@/components/app/workspace-context";
 import { Select } from "@/components/ui/select";
-import { SearchIcon } from "@/components/site/feature-icons";
-
-const statusOptions = [
-  { value: "", label: "All statuses" },
-  { value: "TODO", label: "To Do" },
-  { value: "IN_PROGRESS", label: "In Progress" },
-  { value: "DONE", label: "Done" },
-];
-
-const priorityOptions = [
-  { value: "", label: "All priorities" },
-  { value: "LOW", label: "Low", dotClassName: "bg-green-500" },
-  { value: "MEDIUM", label: "Medium", dotClassName: "bg-yellow-500" },
-  { value: "HIGH", label: "High", dotClassName: "bg-red-500" },
-];
+import { CloseIcon, SearchIcon } from "@/components/ui/icons";
+import { priorityOptions, statusOptions } from "@/components/tasks/task-form";
 
 export function FilterBar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState(searchParams.get("search") ?? "");
+  const { projects } = useWorkspace();
+  const urlSearch = searchParams.get("search") ?? "";
+  const [search, setSearch] = useState(urlSearch);
+  const [lastUrlSearch, setLastUrlSearch] = useState(urlSearch);
+
+  // Keep the input in sync when the URL changes from elsewhere (e.g. the global search bar).
+  if (urlSearch !== lastUrlSearch) {
+    setLastUrlSearch(urlSearch);
+    if (urlSearch !== search.trim()) setSearch(urlSearch);
+  }
 
   function setParam(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    router.push(`${pathname}?${params.toString()}`);
+    if (value) params.set(key, value);
+    else params.delete(key);
+    params.delete("open");
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   }
 
   useEffect(() => {
-    const current = searchParams.get("search") ?? "";
-    if (search === current) return;
-    const timeout = setTimeout(() => setParam("search", search), 350);
+    if (search.trim() === urlSearch) return;
+    const timeout = setTimeout(() => setParam("search", search.trim()), 300);
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
+  const hasFilters = ["search", "status", "priority", "project"].some((k) => searchParams.get(k));
+
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <div className="group relative min-w-[220px] flex-1">
-        <span className="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-400 transition-colors group-focus-within:text-gray-900 dark:text-gray-500 dark:group-focus-within:text-white [&_svg]:h-4 [&_svg]:w-4">
-          <SearchIcon />
-        </span>
+    <div className="flex flex-col gap-3 @3xl/main:flex-row @3xl/main:items-center">
+      <div className="relative flex-1">
+        <label htmlFor="task-search" className="sr-only">
+          Search tasks
+        </label>
+        <SearchIcon
+          width={17}
+          height={17}
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"
+        />
         <input
+          id="task-search"
+          type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search tasks..."
-          className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-9 text-sm text-gray-900 outline-none transition-all focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white dark:focus:ring-white/10"
+          placeholder="Search by name, description, project or assignee..."
+          className="h-10 w-full rounded-lg border border-line bg-card pl-10 pr-3 text-sm text-ink outline-none transition-all placeholder:text-muted focus:border-brand focus:ring-4 focus:ring-brand/10"
         />
-        {search && (
-          <button
-            type="button"
-            onClick={() => setSearch("")}
-            aria-label="Clear search"
-            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </button>
-        )}
       </div>
-      <Select
-        value={searchParams.get("status") ?? ""}
-        onChange={(v) => setParam("status", v)}
-        options={statusOptions}
-        placeholder="All statuses"
-      />
-      <Select
-        value={searchParams.get("priority") ?? ""}
-        onChange={(v) => setParam("priority", v)}
-        options={priorityOptions}
-        placeholder="All priorities"
-      />
+      <div className="grid grid-cols-2 gap-3 @xl/main:grid-cols-3 @3xl/main:flex">
+        <Select
+          className="@3xl/main:w-40"
+          label="Filter by status"
+          value={searchParams.get("status") ?? ""}
+          onChange={(v) => setParam("status", v)}
+          options={[{ value: "", label: "All statuses" }, ...statusOptions]}
+          placeholder="All statuses"
+        />
+        <Select
+          className="@3xl/main:w-40"
+          label="Filter by priority"
+          value={searchParams.get("priority") ?? ""}
+          onChange={(v) => setParam("priority", v)}
+          options={[{ value: "", label: "All priorities" }, ...priorityOptions]}
+          placeholder="All priorities"
+        />
+        <Select
+          className="col-span-2 @xl/main:col-span-1 @3xl/main:w-44"
+          label="Filter by project"
+          value={searchParams.get("project") ?? ""}
+          onChange={(v) => setParam("project", v)}
+          options={[
+            { value: "", label: "All projects" },
+            { value: "none", label: "No project" },
+            ...projects.map((p) => ({ value: p.id, label: p.name, dotColor: p.color })),
+          ]}
+          placeholder="All projects"
+        />
+      </div>
+      {hasFilters && (
+        <button
+          type="button"
+          onClick={() => {
+            setSearch("");
+            router.replace(pathname, { scroll: false });
+          }}
+          className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium text-muted hover:bg-subtle hover:text-ink"
+        >
+          <CloseIcon width={15} height={15} />
+          Clear
+        </button>
+      )}
     </div>
   );
 }

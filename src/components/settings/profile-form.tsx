@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+const inputClass =
+  "mt-1.5 h-10 w-full rounded-lg border border-line bg-card px-3 text-sm text-ink outline-none transition-all focus:border-brand focus:ring-4 focus:ring-brand/10";
 
 export function ProfileForm({
   initialName,
@@ -45,43 +49,45 @@ export function ProfileForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label htmlFor="profile-name" className="block text-sm font-medium text-ink">
           Name
         </label>
         <input
+          id="profile-name"
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full max-w-sm rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white"
+          className={inputClass}
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label htmlFor="profile-email" className="block text-sm font-medium text-ink">
           Email
         </label>
         <input
+          id="profile-email"
           required
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 w-full max-w-sm rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white"
+          className={inputClass}
         />
       </div>
       {error && (
-        <p className="animate-shake text-sm text-red-600 dark:text-red-400">{error}</p>
+        <p role="alert" className="animate-shake text-sm text-red-600 dark:text-red-400">
+          {error}
+        </p>
       )}
       {status === "success" && (
-        <p className="text-sm text-green-600 dark:text-green-400">Saved.</p>
+        <p role="status" className="text-sm text-emerald-600 dark:text-emerald-400">
+          Saved.
+        </p>
       )}
-      <button
-        type="submit"
-        disabled={!dirty || status === "loading"}
-        className="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
-      >
+      <Button type="submit" disabled={!dirty || status === "loading"}>
         {status === "loading" ? "Saving..." : "Save changes"}
-      </button>
+      </Button>
     </form>
   );
 }

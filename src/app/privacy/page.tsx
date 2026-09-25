@@ -32,7 +32,7 @@ export default function PrivacyPage() {
       <h2>Contact</h2>
       <p>
         Questions about your data? Write to{" "}
-        <a href="mailto:tseabra@outlook.pt" className="font-semibold text-gray-900 hover:underline dark:text-gray-100">
+        <a href="mailto:tseabra@outlook.pt" className="font-semibold text-ink hover:underline">
           tseabra@outlook.pt
         </a>
         .

@@ -10,18 +10,18 @@ export function IconField({ icon, label, id, ...props }: IconFieldProps) {
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-base font-medium text-gray-700 dark:text-gray-300"
+        className="mb-1.5 block text-base font-medium text-body"
       >
         {label}
       </label>
       <div className="group relative">
-        <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400 transition-colors group-focus-within:text-gray-900 dark:text-gray-500 dark:group-focus-within:text-white">
+        <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-muted transition-colors group-focus-within:text-brand dark:group-focus-within:text-white">
           {icon}
         </span>
         <input
           id={id}
           {...props}
-          className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-11 pr-4 text-base text-gray-900 outline-none transition-all focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-white dark:focus:ring-white/10"
+          className="w-full rounded-lg border border-line bg-card py-3 pl-11 pr-4 text-base text-ink outline-none transition-all focus:border-brand focus:ring-2 focus:ring-brand/10"
         />
       </div>
     </div>

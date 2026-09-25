@@ -1,89 +1,135 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { CheckIcon, ChevronDownIcon } from "@/components/ui/icons";
 
-type Option = { value: string; label: string; dotClassName?: string };
+export type SelectOption = { value: string; label: string; dotColor?: string };
 
 export function Select({
   value,
   onChange,
   options,
   placeholder,
+  label,
+  size = "md",
+  className = "",
 }: {
   value: string;
   onChange: (value: string) => void;
-  options: Option[];
+  options: SelectOption[];
   placeholder: string;
+  label?: string;
+  size?: "sm" | "md";
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const listId = useId();
 
   useEffect(() => {
+    if (!open) return;
     function handleClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [open]);
 
   const current = options.find((o) => o.value === value);
 
+  function openList() {
+    setActive(Math.max(0, options.findIndex((o) => o.value === value)));
+    setOpen(true);
+  }
+
+  function choose(option: SelectOption) {
+    onChange(option.value);
+    setOpen(false);
+  }
+
+  function onKeyDown(e: React.KeyboardEvent) {
+    if (!open) {
+      if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
+        e.preventDefault();
+        openList();
+      }
+      return;
+    }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(false);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActive((i) => Math.min(options.length - 1, i + 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActive((i) => Math.max(0, i - 1));
+    } else if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      choose(options[active]);
+    } else if (e.key === "Tab") {
+      setOpen(false);
+    }
+  }
+
+  const height = size === "sm" ? "h-8 px-2.5 text-xs" : "h-10 px-3 text-sm";
+
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className={`relative ${className}`}>
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full min-w-[170px] items-center justify-between gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 transition-colors hover:border-gray-400 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-gray-600"
+        onClick={() => (open ? setOpen(false) : openList())}
+        onKeyDown={onKeyDown}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-label={label}
+        className={`flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-card font-medium text-ink transition-colors hover:border-[#d5dae0] dark:hover:border-[#3a4552] ${height}`}
       >
-        <span className={`flex items-center gap-2 ${current ? "" : "text-gray-400 dark:text-gray-500"}`}>
-          {current?.dotClassName && (
-            <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${current.dotClassName}`} />
+        <span className={`flex min-w-0 items-center gap-2 ${current ? "" : "text-muted"}`}>
+          {current?.dotColor && (
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: current.dotColor }} />
           )}
-          {current?.label ?? placeholder}
+          <span className="truncate">{current?.label ?? placeholder}</span>
         </span>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`shrink-0 text-gray-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+        <ChevronDownIcon
+          width={15}
+          height={15}
+          className={`shrink-0 text-muted transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
       {open && (
-        <div className="animate-fade-in-up absolute z-10 mt-2 w-full min-w-[170px] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg shadow-gray-900/10 dark:border-gray-800 dark:bg-gray-900">
-          {options.map((option) => {
+        <ul
+          id={listId}
+          role="listbox"
+          className="animate-fade-in absolute z-30 mt-1.5 max-h-64 w-full min-w-[160px] overflow-auto rounded-xl border border-line bg-card p-1 shadow-lg shadow-navy/10"
+        >
+          {options.map((option, i) => {
             const selected = option.value === value;
             return (
-              <button
-                key={option.value || "all"}
-                type="button"
-                onClick={() => {
-                  onChange(option.value);
-                  setOpen(false);
-                }}
-                className={`flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm transition-colors ${
-                  selected
-                    ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-                    : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              <li
+                key={option.value || "__all"}
+                role="option"
+                aria-selected={selected}
+                onMouseEnter={() => setActive(i)}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => choose(option)}
+                className={`flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-2 text-sm ${
+                  i === active ? "bg-subtle text-ink" : "text-body"
                 }`}
               >
-                {option.dotClassName && (
-                  <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${option.dotClassName}`} />
+                {option.dotColor && (
+                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: option.dotColor }} />
                 )}
-                {option.label}
-              </button>
+                <span className="flex-1 truncate">{option.label}</span>
+                {selected && <CheckIcon width={14} height={14} className="text-brand" />}
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
     </div>
   );
