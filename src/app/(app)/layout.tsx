@@ -24,11 +24,7 @@ export default async function AppLayout({
           <div className="flex items-center justify-between py-4 sm:py-5">
             <div className="flex items-center gap-10">
               <Link href="/dashboard">
-                <Logo
-                  size={60}
-                  textClassName="text-xl sm:text-4xl"
-                  imgClassName="w-9 h-9 sm:w-16 sm:h-16"
-                />
+                <Logo size={48} textClassName="text-xl sm:text-4xl" />
               </Link>
               <div className="hidden sm:block">
                 <DashboardNav />

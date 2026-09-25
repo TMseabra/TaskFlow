@@ -15,11 +15,11 @@ export default async function HomePage() {
     <>
       <SiteHeader />
       <main className="flex-1">
-        <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden px-4 text-center sm:px-6">
+        <section className="relative flex min-h-[650px] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:px-6 lg:h-[calc(100vh-180px)]">
           <HeroMockup />
 
           <div className="relative z-10">
-            <h1 className="animate-fade-in-up lowercase text-6xl font-extrabold leading-none tracking-[-0.03em] sm:text-8xl md:text-[100px]">
+            <h1 className="animate-fade-in-up lowercase text-6xl font-extrabold leading-none tracking-[-2px] sm:text-8xl sm:tracking-[-3px] md:text-[100px] md:tracking-[-4px]">
               <span className="text-[#07585c] dark:text-[#3ddc9a]">task</span>
               <span className="text-[#00c96b]">flow</span>
             </h1>

@@ -1,11 +1,11 @@
 const sideItems = [
-  { label: "Dashboard", active: true },
-  { label: "Tasks", active: false },
-  { label: "Calendar", active: false },
-  { label: "Projects", active: false },
-  { label: "Team", active: false },
-  { label: "Reports", active: false },
-  { label: "Settings", active: false },
+  { label: "Dashboard", icon: "▣", active: true },
+  { label: "Tasks", icon: "□", active: false },
+  { label: "Calendar", icon: "▣", active: false },
+  { label: "Projects", icon: "⚑", active: false },
+  { label: "Team", icon: "♧", active: false },
+  { label: "Reports", icon: "▥", active: false },
+  { label: "Settings", icon: "⚙", active: false },
 ];
 
 const stats = [
@@ -55,7 +55,7 @@ export function HeroMockup() {
                     : "text-[#89929d] dark:text-[#5a6572]"
                 }`}
               >
-                {item.label}
+                {item.icon}&nbsp;&nbsp;{item.label}
               </div>
             ))}
           </nav>

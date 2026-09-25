@@ -11,11 +11,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-20 border-b border-gray-200 bg-white/80 backdrop-blur dark:border-gray-900 dark:bg-black">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
         <Link href="/" className="min-w-0">
-          <Logo
-            size={64}
-            textClassName="text-xl sm:text-3xl"
-            imgClassName="w-9 h-9 sm:w-16 sm:h-16"
-          />
+          <Logo size={44} textClassName="text-xl sm:text-3xl" />
         </Link>
 
         <nav className="hidden items-center gap-2 text-base font-medium text-gray-600 dark:text-gray-300 md:flex">

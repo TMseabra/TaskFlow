@@ -14,11 +14,7 @@ export default function LoginPage() {
   return (
     <main className="relative flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 py-10 sm:px-6 sm:py-12 dark:from-black dark:via-black dark:to-black">
       <Link href="/" className="animate-fade-in-up mb-6 sm:absolute sm:left-6 sm:top-6 sm:mb-0">
-        <Logo
-          size={48}
-          textClassName="text-xl sm:text-2xl"
-          imgClassName="w-9 h-9 sm:w-12 sm:h-12"
-        />
+        <Logo size={40} textClassName="text-xl sm:text-2xl" />
       </Link>
       <h1 className="animate-fade-in-up mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
         Sign in
