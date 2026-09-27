@@ -1,6 +1,6 @@
 # TaskFlow
 
-Task management platform (mini-Trello/Jira style), built as a portfolio project to demonstrate full CRUD, authentication, backend and database integration.
+Task management platform (mini-Trello/Jira style), built to demonstrate full CRUD, authentication, backend and database integration.
 
 ## Stack
 
