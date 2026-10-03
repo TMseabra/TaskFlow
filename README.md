@@ -60,7 +60,7 @@ npm run dev
  
 The app is  available at http://localhost:3000.  Create an account at `/register` and start using the dashboard and task list at `/dashboard` and `/tasks`.
 
-Other useful commands :
+Other useful commands:
 - `npm run build` / `npm run start` - production build and start.
 - `npm run lint` - runs ESLint.
 - `npm run db:studio` - opens Prisma Studio to inspect the data.
